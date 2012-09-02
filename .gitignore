@@ -1,0 +1,9 @@
+# osx noise
+.DS_Store
+profile
+
+# Foreman
+.env
+
+# Node
+node_modules
