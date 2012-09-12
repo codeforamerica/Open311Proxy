@@ -19,7 +19,7 @@ var info = require(__dirname + '/routes/info');
 var dc = require(__dirname + '/routes/dc');
 app.get('/', info.index);
 app.get('/api/dc', dc.serviceList);
-app.get('/api/:city', info.example);
+app.get('/api/:city', info.serviceList);
 
 
 app.listen(PORT);
