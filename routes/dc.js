@@ -1,11 +1,13 @@
-var Open311 = require('../lib/open311.js');
+var Open311 = require('open311');
 
 var serviceList = exports.serviceList = function index(req, res) {
-  var open311 = new Open311({ 
-    format: req.params.format
+  var open311 = new Open311({
+    endpoint: "http://app.311.dc.gov/cwi/Open311/v2/",
+    jurisdiction: "dc.gov",
+    format: "xml"
   });
   
-  open311.serviceList(function(serviceList) {
+  open311.serviceList(function(error, serviceList) {
     if(req.params.format === 'xml') {
       res.set({ 'Content-Type': 'text/xml'});
     }
