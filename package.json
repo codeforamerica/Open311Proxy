@@ -11,7 +11,8 @@
     "request": "2.x",
     "xml2json": "git+ssh://git@github.com:Mr0grog/node-xml2json.git",
     "datejs": "0.0.2",
-    "mongodb": "~1.1.6"
+    "mongodb": "~1.1.6",
+    "open311": "~0.0.9"
   },
   "devDependencies" : {
     "jasmine-node": "1.x"
