@@ -16,10 +16,8 @@ app.configure(function(){
 
 /** Routing/Controllers **/
 var info = require(__dirname + '/routes/info');
-var dc = require(__dirname + '/routes/dc');
 app.get('/', info.index);
-app.get('/api/dc', dc.serviceList);
-app.get('/api/:city', info.serviceList);
+app.get('/api/:city/services.:format', info.serviceList);
 
 
 app.listen(PORT);

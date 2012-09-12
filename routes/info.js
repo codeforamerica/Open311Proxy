@@ -1,6 +1,7 @@
 var util = require("util");
 var config = require("../config");
 var mongodb = require("mongodb");
+var Open311 = require("open311");
 
 var index = exports.index = function index(req, res) {
   res.send('Hello World');
@@ -22,30 +23,30 @@ exports.serviceList = function serviceList(req, res) {
     db.collection('endpoints', function(error, coll) {
       if (error) {
         res.send("UHOH no collection!");
-
         db.close();
         return;
       }
 
-      console.log(endpointId);
       coll.findOne({
-        // _id: mongodb.ObjectID(endpointId)
-        shortcut: "dc"
-      }, function(error, doc) {
-        if (error) {
+        _id: endpointId
+      }, function(error, endpoint) {
+        if (error || !endpoint) {
           res.send("UHOH NO RECORD! " + error);
-
           db.close();
           return;
         }
 
-        console.log("DOC: " + util.inspect(doc));
-        var shortcut = doc.shortcut;
-        var open311 = new Open311(shortcut);
-        
+        var options = endpoint.shortcut || {
+          endpoint: endpoint.endpoint,
+          jurisdiction: endpoint.jurisdiction,
+          format: endpoint.format
+        };
+
+        var open311 = new Open311(options);
         open311.serviceList(function(error, serviceList) {
           if(req.params.format === 'xml') {
             res.set({ 'Content-Type': 'text/xml'});
+            // FIXME: we're not actually sending XML right now
           }
           else {
             res.set({ 'Content-Type': 'text/json'});
